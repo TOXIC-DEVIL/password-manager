@@ -17,15 +17,18 @@ def save(account, password, note=False):
 def check(account, password):
   accounts = []
   passwords = []
-  with open('creds.txt', 'r') as file:
-    content = file.read().strip()
-    allCreds = content.split('\n')
-    for creds in allCreds:
-      accounts.append(creds.split('|')[0])
-      passwords.append(
-        base64.b64decode(creds.split('|')[1]).decode('utf-8')
-      )
-  return account in accounts and password in passwords
+  try:
+    with open('creds.txt', 'r') as file:
+      content = file.read().strip()
+      allCreds = content.split('\n')
+      for creds in allCreds:
+        accounts.append(creds.split('|')[0])
+        passwords.append(
+          base64.b64decode(creds.split('|')[1]).decode('utf-8')
+        )
+    return account in accounts and password in passwords
+  except IndexError:
+    return False
 
 def creds(account_or_note):
   accounts = []
