@@ -3,9 +3,12 @@ from simple_chalk import yellow, green, red, blue, white
 import base64
 
 def main():
-  exists = False
-  with open('accesskey.txt', 'r') as file:
-    exists = file.read() != ''
+  exists = True
+  try:
+    with open('accesskey.txt', 'r') as file:
+      exists = file.read() != '' or file.read() != None
+  except FileNotFoundError:
+    exists = False
   if exists == False:
     access_key = input(yellow('[ ? ] Write an access key: ')) 
     with open('accesskey.txt', 'w') as file:
